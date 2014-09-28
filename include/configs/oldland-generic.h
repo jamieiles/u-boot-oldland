@@ -9,7 +9,7 @@
 #define CONFIG_SYS_RESET_ADDR		0x10000000
 
 #define CONFIG_SYS_SDRAM_BASE		0x20000000
-#define CONFIG_SYS_SDRAM_SIZE		0x02000000
+#define CONFIG_SYS_SDRAM_SIZE		(32 * 1024 *1024)
 
 #define CONFIG_SYS_CACHELINE_SIZE	32
 
@@ -44,14 +44,17 @@
  *           | Environment             |
  *           ---------------------------
  *           | Monitor                 |
+ *           ---------------------------
+ *           | Heap                    |
  * RAM end   ---------------------------
  */
 /* We're running in RAM */
 #define CONFIG_MONITOR_IS_IN_RAM
-#define CONFIG_SYS_MONITOR_LEN	0x40000	/* Reserve 256k */
+#define CONFIG_SYS_MONITOR_LEN	0x80000	/* Reserve 512k */
 #define CONFIG_SYS_MONITOR_BASE	(CONFIG_SYS_SDRAM_BASE + \
 				CONFIG_SYS_SDRAM_SIZE - \
-				CONFIG_SYS_MONITOR_LEN)
+				CONFIG_SYS_MONITOR_LEN - \
+				CONFIG_SYS_MALLOC_LEN)
 
 #define CONFIG_ENV_IS_NOWHERE
 #define CONFIG_ENV_SIZE		0x20000 /* Total Size of Environment, 128KB */
