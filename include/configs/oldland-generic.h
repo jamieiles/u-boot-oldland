@@ -129,5 +129,7 @@
 #define CONFIG_CMD_PART
 #define CONFIG_CMD_MMC
 #define CONFIG_PARTITION_UUIDS
+#define CONFIG_CMD_MEMORY
+#define CONFIG_CMD_MEMTEST
 
 #endif /* __CONFIG_H */
