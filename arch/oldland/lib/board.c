@@ -1,6 +1,8 @@
 #include <common.h>
 #include <stdio_dev.h>
 #include <malloc.h>
+#include <mmc.h>
+#include <spi.h>
 #include <timestamp.h>
 #include <version.h>
 
@@ -34,6 +36,18 @@ static int (* const init_sequence[])(void) = {
 	checkboard,
 };
 
+static void oldland_mmc_init(void)
+{
+	struct mmc *mmc = mmc_spi_init(0, 0, 1000000, SPI_MODE_0);
+
+	if (!mmc) {
+		printf("Failed to create SPI MMC device\n");
+		return;
+	}
+
+	mmc_init(mmc);
+}
+
 
 /***********************************************************************/
 void board_init(void)
@@ -65,6 +79,7 @@ void board_init(void)
 	stdio_init();
 	jumptable_init();
 	console_init_r();
+	oldland_mmc_init();
 
 #if defined(CONFIG_BOARD_LATE_INIT)
 	board_late_init();
