@@ -210,6 +210,20 @@ gd_t *global_data;
 "	l.jr	r13\n"		\
 "	l.nop\n"				\
 	: : "i"(offsetof(gd_t, jt)), "i"(XF_ ## x * sizeof(void *)) : "r13");
+#elif defined(CONFIG_OLDLAND)
+/*
+ * r10 holds the pointer to the global_data, r11 is a call-clobbered
+ * register
+ */
+#define EXPORT_FUNC(x) \
+	asm volatile (			\
+"	.globl " #x "\n"		\
+#x ":\n"				\
+"	ldr32	$r11, [$r10, 0]\n"	\
+"	add	$r11, $r11, %1\n"	\
+"	ldr32	$r11, [$r11, 0]\n"	\
+"	call	$r11\n"			\
+	: : "i"(offsetof(gd_t, jt)), "i"(XF_ ## x * sizeof(void *)) : "$r11");
 #elif defined(CONFIG_ARC)
 /*
  * r25 holds the pointer to the global_data. r10 is call clobbered.

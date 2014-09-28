@@ -140,6 +140,7 @@ serial_initfunc(sconsole_serial_initialize);
 serial_initfunc(p3mx_serial_initialize);
 serial_initfunc(altera_jtag_serial_initialize);
 serial_initfunc(altera_serial_initialize);
+serial_initfunc(oldland_serial_initialize);
 serial_initfunc(atmel_serial_initialize);
 serial_initfunc(lpc32xx_serial_initialize);
 serial_initfunc(mcf_serial_initialize);
@@ -233,6 +234,7 @@ void serial_initialize(void)
 	p3mx_serial_initialize();
 	altera_jtag_serial_initialize();
 	altera_serial_initialize();
+	oldland_serial_initialize();
 	atmel_serial_initialize();
 	lpc32xx_serial_initialize();
 	mcf_serial_initialize();

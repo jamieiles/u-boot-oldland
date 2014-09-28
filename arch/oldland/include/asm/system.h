@@ -1,0 +1,4 @@
+#ifndef __ASM_OLDLAND_SYSTEM_H
+#define __ASM_OLDLAND_SYSTEM_H
+
+#endif /* __ASM_OLDLAND_SYSTEM_H */

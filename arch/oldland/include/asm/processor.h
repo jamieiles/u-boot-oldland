@@ -1,0 +1,4 @@
+#ifndef __ASM_OLDLAND_PROCESSOR_H
+#define __ASM_OLDLAND_PROCESSOR_H
+
+#endif
