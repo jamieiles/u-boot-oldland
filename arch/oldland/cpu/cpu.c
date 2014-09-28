@@ -62,3 +62,42 @@ unsigned long __one_cmplsi2(unsigned long x)
 
 	return x;
 }
+
+void oldland_illegal_instr(unsigned long faultlr, unsigned long far,
+			   unsigned long dfar)
+{
+	printf("ILLEGAL INSTRUCTION: $lr %08lx $far %08lx $dfar %08lx\n",
+	       faultlr, far, dfar);
+	for (;;)
+		continue;
+}
+
+void oldland_swi(unsigned long faultlr, unsigned long far, unsigned long dfar)
+{
+	printf("SWI: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	for (;;)
+		continue;
+}
+
+void oldland_irq(unsigned long faultlr, unsigned long far, unsigned long dfar)
+{
+	printf("IRQ: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	for (;;)
+		continue;
+}
+
+void oldland_ifetch_abort(unsigned long faultlr, unsigned long far,
+			  unsigned long dfar)
+{
+	printf("IFETCH ABORT: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	for (;;)
+		continue;
+}
+
+void oldland_data_abort(unsigned long faultlr, unsigned long far,
+			unsigned long dfar)
+{
+	printf("DATA ABORT: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	for (;;)
+		continue;
+}
