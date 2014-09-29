@@ -29,13 +29,15 @@ static ulong timestamp;
 #define REG_EOI_OFFS 0xc
 
 #define CONTROL_ENABLED (1 << 1)
+#define CONTROL_PERIODIC (1 << 0)
 
 int timer_init(void)
 {
 	/* Set up the timer for the first expiration. */
 	timestamp = 0;
 
-	writel(CONTROL_ENABLED, TIMER0_BASE + REG_CONTROL_OFFS);
+	writel(CONTROL_PERIODIC | CONTROL_ENABLED,
+	       TIMER0_BASE + REG_CONTROL_OFFS);
 
 	return 0;
 }
