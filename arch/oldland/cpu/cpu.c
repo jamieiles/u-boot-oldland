@@ -55,14 +55,6 @@ void icache_enable(void)
 {
 }
 
-unsigned long __one_cmplsi2(unsigned long x)
-{
-	asm volatile("mov	$r1, -1\n\t"
-		     "xor	%0, %0, $r1" : "=r"(x) : "r"(x) : "$r1");
-
-	return x;
-}
-
 void oldland_illegal_instr(unsigned long faultlr, unsigned long far,
 			   unsigned long dfar)
 {
