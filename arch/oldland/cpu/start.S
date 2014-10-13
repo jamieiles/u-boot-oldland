@@ -9,6 +9,7 @@ _start:
 	movhi	$sp, %hi(CONFIG_SYS_INIT_SP_ADDR)
 	orlo	$sp, $sp, %lo(CONFIG_SYS_INIT_SP_ADDR)
 	mov	$fp, $sp
+	or	$fp, $fp, 1
 
 	/* clear BSS segments */
 	movhi	$r4, %hi(_bss_start)

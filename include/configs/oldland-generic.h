@@ -137,5 +137,6 @@
 #define CONFIG_CMD_FS_GENERIC
 #define CONFIG_CMD_SOURCE
 #define CONFIG_CMD_SPI
+#define CONFIG_KALLSYMS
 
 #endif /* __CONFIG_H */
