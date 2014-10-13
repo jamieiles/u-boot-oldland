@@ -38,7 +38,7 @@ static int (* const init_sequence[])(void) = {
 
 static void oldland_mmc_init(void)
 {
-	struct mmc *mmc = mmc_spi_init(0, 0, 1000000, SPI_MODE_0);
+	struct mmc *mmc = mmc_spi_init(0, 0, 100000, SPI_MODE_0);
 
 	if (!mmc) {
 		printf("Failed to create SPI MMC device\n");
