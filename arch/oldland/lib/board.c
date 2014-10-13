@@ -75,6 +75,8 @@ void board_init(void)
 	/* The Malloc area is immediately below the monitor copy in RAM */
 	mem_malloc_init(CONFIG_SYS_MALLOC_BASE, CONFIG_SYS_MALLOC_LEN);
 
+	mmc_initialize(bd);
+
 	env_relocate();
 	stdio_init();
 	jumptable_init();
