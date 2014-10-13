@@ -22,8 +22,8 @@ void __reset(void)
 int do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 	disable_interrupts();
-	__asm__("movhi $r1,%hi(__reset);  \
-		 orlo  $r1,$r1,%lo(__reset); \
+	__asm__("movhi $r1,%hi(0x10000000);  \
+		 orlo  $r1,$r1,%lo(0x10000000); \
 		 b $r1");
 	/* not reached, __reset does not return */
 	return 0;
