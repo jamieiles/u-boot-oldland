@@ -109,7 +109,7 @@ static void spi_copy_data_to_xfer_buf(const struct oldland_spi_slave *spi,
 	size_t m;
 
 	for (m = 0; m < nbytes; ++m)
-		writeb(data8[m], data ? spi->base + XFER_BUF + m : 0xff);
+		writeb(data ? data8[m] : 0xff, spi->base + XFER_BUF + m);
 }
 
 static void spi_copy_data_from_xfer_buf(const struct oldland_spi_slave *spi,
