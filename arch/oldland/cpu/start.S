@@ -31,8 +31,32 @@ _clear_bss:
 
 	.size	_start, .-_start
 
+.macro saveregs
+	str32	$lr, [$sp, -8]
+	str32	$sp, [$sp, -12]
+	str32	$fp, [$sp, -16]
+	str32	$r12, [$sp, -20]
+	str32	$r11, [$sp, -24]
+	str32	$r10, [$sp, -28]
+	str32	$r9, [$sp, -32]
+	str32	$r8, [$sp, -36]
+	str32	$r7, [$sp, -40]
+	str32	$r6, [$sp, -44]
+	str32	$r5, [$sp, -48]
+	str32	$r4, [$sp, -52]
+	str32	$r3, [$sp, -56]
+	str32	$r2, [$sp, -60]
+	str32	$r1, [$sp, -64]
+	str32	$r0, [$sp, -68]
+	sub	$sp, $sp, 68
+	gcr	$r0, 3
+	str32	$r0, [$sp, 16 * 4]
+	mov	$r3, $sp
+.endm
+
 .macro ex_handler name, handler
 \name:
+	saveregs
 	mov	$r0, $lr
 	gcr	$r1, 3
 	gcr	$r2, 4

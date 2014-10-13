@@ -55,41 +55,64 @@ void icache_enable(void)
 {
 }
 
+struct oldland_regs {
+	unsigned regs[17];
+};
+
+static void dump_regs(struct oldland_regs *regs)
+{
+	unsigned i;
+	printf("regs:");
+	for (i = 0; i <= 12; ++i)
+		printf("r%2d: %08x\n", i, regs->regs[i]);
+	printf("$fp: %08x\n", regs->regs[13]);
+	printf("$sp: %08x\n", regs->regs[14]);
+	printf("$lr: %08x\n", regs->regs[15]);
+	printf("$pc: %08x\n", regs->regs[16]);
+}
+
 void oldland_illegal_instr(unsigned long faultlr, unsigned long far,
-			   unsigned long dfar)
+			   unsigned long dfar, struct oldland_regs *regs)
 {
 	printf("ILLEGAL INSTRUCTION: $lr %08lx $far %08lx $dfar %08lx\n",
 	       faultlr, far, dfar);
+	dump_regs(regs);
 	for (;;)
 		continue;
 }
 
-void oldland_swi(unsigned long faultlr, unsigned long far, unsigned long dfar)
+void oldland_swi(unsigned long faultlr, unsigned long far, unsigned long dfar,
+		 struct oldland_regs *regs)
 {
 	printf("SWI: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	dump_regs(regs);
 	for (;;)
 		continue;
 }
 
-void oldland_irq(unsigned long faultlr, unsigned long far, unsigned long dfar)
+void oldland_irq(unsigned long faultlr, unsigned long far, unsigned long dfar,
+		 struct oldland_regs *regs)
 {
 	printf("IRQ: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	dump_regs(regs);
 	for (;;)
 		continue;
 }
 
 void oldland_ifetch_abort(unsigned long faultlr, unsigned long far,
-			  unsigned long dfar)
+			  unsigned long dfar, struct oldland_regs *regs)
 {
 	printf("IFETCH ABORT: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	dump_regs(regs);
 	for (;;)
 		continue;
 }
 
 void oldland_data_abort(unsigned long faultlr, unsigned long far,
-			unsigned long dfar)
+			unsigned long dfar, struct oldland_regs *regs)
 {
 	printf("DATA ABORT: $lr %08lx $far %08lx $dfar %08lx\n", faultlr, far, dfar);
+	dump_regs(regs);
 	for (;;)
 		continue;
 }
