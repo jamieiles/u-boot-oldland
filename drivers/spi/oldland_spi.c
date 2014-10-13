@@ -89,7 +89,7 @@ int spi_claim_bus(struct spi_slave *slave)
 {
 	struct oldland_spi_slave *spi = to_oldland_spi_slave(slave);
 
-	writel(0, spi->base + OLDLAND_SPI_CONTROL);
+	writel(0x1ff, spi->base + OLDLAND_SPI_CONTROL);
 	writel(0, spi->base + OLDLAND_SPI_SLAVE_SEL);
 
 	return 0;
@@ -156,7 +156,7 @@ int spi_xfer(struct spi_slave *slave, unsigned int bitlen, const void *dout,
 		spi_cs_activate(slave);
 
 	spi_copy_data_to_xfer_buf(spi, dout, bytes);
-	writel(1, spi->base + OLDLAND_SPI_CONTROL);
+	writel(0x1ff, spi->base + OLDLAND_SPI_CONTROL);
 	writel(XFER_START | bytes, spi->base + OLDLAND_SPI_XFER_CTRL);
 	spi_wait_idle(spi);
 	spi_copy_data_from_xfer_buf(spi, din, bytes);
