@@ -36,7 +36,7 @@ const char *symbol_lookup(unsigned long addr, unsigned long *caddr)
 		if (sym_addr > addr)
 			break;
 		*caddr = sym_addr;
-		csym = sym;
+		csym = sym + 1;
 		sym += strlen(sym) + 1;
 	}
 
