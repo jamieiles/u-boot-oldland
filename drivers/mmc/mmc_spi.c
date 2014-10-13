@@ -65,7 +65,7 @@ static uint mmc_spi_sendcmd(struct mmc *mmc, ushort cmdidx, u32 cmdarg)
 	spi_xfer(spi, sizeof(cmdo) * 8, cmdo, NULL, 0);
 	for (i = 0; i < CTOUT; i++) {
 		spi_xfer(spi, 1 * 8, NULL, &r1, 0);
-		if (i && (r1 & 0x80) == 0) /* r1 response */
+		if ((r1 & 0x80) == 0) /* r1 response */
 			break;
 	}
 	debug("%s:cmd%d resp%d %x\n", __func__, cmdidx, i, r1);
@@ -134,7 +134,7 @@ static uint mmc_spi_writedata(struct mmc *mmc, const void *xbuf,
 		if (SPI_MMC_RESPONSE_CODE(r1) == SPI_RESPONSE_ACCEPTED) {
 			for (i = 0; i < WTOUT; i++) { /* wait busy */
 				spi_xfer(spi, 1 * 8, NULL, &r1, 0);
-				if (i && r1 == 0xff) {
+				if (r1 == 0xff) {
 					r1 = 0;
 					break;
 				}
@@ -156,7 +156,7 @@ static uint mmc_spi_writedata(struct mmc *mmc, const void *xbuf,
 		spi_xfer(spi, 2 * 8, tok, NULL, 0);
 		for (i = 0; i < WTOUT; i++) { /* wait busy */
 			spi_xfer(spi, 1 * 8, NULL, &r1, 0);
-			if (i && r1 == 0xff) {
+			if (r1 == 0xff) {
 				r1 = 0;
 				break;
 			}
