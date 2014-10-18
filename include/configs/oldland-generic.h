@@ -144,4 +144,9 @@
 #define CONFIG_CMD_SPI
 #define CONFIG_KALLSYMS
 
+#define CONFIG_ENC28J60
+#define CONFIG_CMD_PING
+#define CONFIG_CMD_DHCP
+#define CONFIG_CMD_MII
+
 #endif /* __CONFIG_H */

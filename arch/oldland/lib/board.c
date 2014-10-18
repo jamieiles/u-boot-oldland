@@ -2,9 +2,12 @@
 #include <stdio_dev.h>
 #include <malloc.h>
 #include <mmc.h>
+#include <net.h>
+#include <netdev.h>
 #include <spi.h>
 #include <timestamp.h>
 #include <version.h>
+#include <miiphy.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -55,6 +58,12 @@ static int (* const init_sequence[])(void) = {
 	checkboard,
 };
 
+static void oldland_ethernet_init(void)
+{
+	miiphy_init();
+	enc28j60_initialize(0, 1, 100000, SPI_MODE_0);
+	eth_init(gd->bd);
+}
 
 
 /***********************************************************************/
@@ -87,6 +96,7 @@ void board_init(void)
 	stdio_init();
 	jumptable_init();
 	console_init_r();
+	oldland_ethernet_init();
 
 #if defined(CONFIG_BOARD_LATE_INIT)
 	board_late_init();
