@@ -23,11 +23,30 @@ DECLARE_GLOBAL_DATA_PTR;
 
 extern int cache_init(void);
 
+static int oldland_mmc_init(void)
+{
+	struct mmc *mmc;
+	bd_t *bd = gd->bd;
+
+	mmc_initialize(bd);
+
+	mmc = mmc_spi_init(0, 0, 100000, SPI_MODE_0);
+	if (!mmc) {
+		printf("Failed to create SPI MMC device\n");
+		return -1;
+	}
+
+	mmc_init(mmc);
+
+	return 0;
+}
+
 /*
  * Initialization sequence
  */
 static int (* const init_sequence[])(void) = {
 	timer_init,		/* initialize timer */
+	oldland_mmc_init,
 	env_init,
 	serial_init,
 	console_init_f,
@@ -36,17 +55,6 @@ static int (* const init_sequence[])(void) = {
 	checkboard,
 };
 
-static void oldland_mmc_init(void)
-{
-	struct mmc *mmc = mmc_spi_init(0, 0, 100000, SPI_MODE_0);
-
-	if (!mmc) {
-		printf("Failed to create SPI MMC device\n");
-		return;
-	}
-
-	mmc_init(mmc);
-}
 
 
 /***********************************************************************/
@@ -67,21 +75,18 @@ void board_init(void)
 	bd->bi_memstart = CONFIG_SYS_SDRAM_BASE;
 	bd->bi_memsize = CONFIG_SYS_SDRAM_SIZE;
 
+	/* The Malloc area is immediately below the monitor copy in RAM */
+	mem_malloc_init(CONFIG_SYS_MALLOC_BASE, CONFIG_SYS_MALLOC_LEN);
+
 	for (i = 0; i < ARRAY_SIZE(init_sequence); i++) {
 		if (init_sequence[i]())
 			hang();
 	}
 
-	/* The Malloc area is immediately below the monitor copy in RAM */
-	mem_malloc_init(CONFIG_SYS_MALLOC_BASE, CONFIG_SYS_MALLOC_LEN);
-
-	mmc_initialize(bd);
-
 	env_relocate();
 	stdio_init();
 	jumptable_init();
 	console_init_r();
-	oldland_mmc_init();
 
 #if defined(CONFIG_BOARD_LATE_INIT)
 	board_late_init();
