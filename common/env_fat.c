@@ -73,7 +73,7 @@ int saveenv(void)
 
 void env_relocate_spec(void)
 {
-	char buf[CONFIG_ENV_SIZE];
+	char __aligned(ARCH_DMA_MINALIGN) buf[CONFIG_ENV_SIZE];
 	block_dev_desc_t *dev_desc = NULL;
 	disk_partition_t info;
 	int dev, part;
