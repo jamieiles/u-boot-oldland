@@ -525,9 +525,8 @@ int do_bdinfo(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 
 	print_num("mem start",		(ulong)bd->bi_memstart);
 	print_lnum("mem size",		(u64)bd->bi_memsize);
-	print_num("flash start",	(ulong)bd->bi_flashstart);
-	print_num("flash size",		(ulong)bd->bi_flashsize);
-	print_num("flash offset",	(ulong)bd->bi_flashoffset);
+	printf("fpga rev    = %s\n", *(unsigned long *)(0x10000004) + 0x10000000);
+	printf("fpga build  = %s\n", *(unsigned long *)(0x10000008) + 0x10000000);
 
 	printf("baudrate    = %u bps\n", gd->baudrate);
 
