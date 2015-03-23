@@ -5,7 +5,7 @@ static inline unsigned long cache_line_size(unsigned long cpuidnum)
 {
 	unsigned long config;
 
-	asm volatile("cpuid %0, 1" : "=r"(config) : "I"(cpuidnum));
+	asm volatile("cpuid %0, %1" : "=r"(config) : "I"(cpuidnum));
 
 	return (config & 0xff) * 4;
 }
