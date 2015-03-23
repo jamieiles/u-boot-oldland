@@ -29,6 +29,12 @@ void invalidate_dcache_range(unsigned long addr, unsigned long stop)
 
 	line_size = cache_line_size(4);
 
+	/*
+	 * We flush/invalidate by index, so need to flush before invalidate so
+	 * we don't invalidate another way that is dirty.
+	 */
+	flush_dcache_range(addr, stop);
+
 	while (addr < stop) {
 		unsigned long index = addr / line_size;
 		asm volatile("cache	%0, 0x1" :: "r"(index));
