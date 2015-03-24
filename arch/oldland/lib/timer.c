@@ -36,6 +36,7 @@ int timer_init(void)
 	/* Set up the timer for the first expiration. */
 	timestamp = 0;
 
+	writel(~0, TIMER0_BASE + REG_RELOAD_OFFS);
 	writel(CONTROL_PERIODIC | CONTROL_ENABLED,
 	       TIMER0_BASE + REG_CONTROL_OFFS);
 
